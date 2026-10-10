@@ -1,4 +1,5 @@
 import type { Lang } from "./i18n";
+import { ISO_BY_SLUG } from "./countries";
 
 const WP_API = process.env.WP_API_URL ?? "https://ibesc.samatech.cloud/wp-json/wp/v2";
 
@@ -48,7 +49,7 @@ function toPays(p: any): Pays {
   return {
     id: p.id,
     slug: p.slug,
-    code: String(m.code_iso ?? "").toUpperCase(),
+    code: String(m.code_iso ?? m.iso ?? m.code ?? "").toUpperCase() || ISO_BY_SLUG[p.slug] || "",
     certificat: String(m.certificat ?? ""),
     certificatNom: String(m.certificat_nom ?? ""),
     valide: Boolean(m.valide_par_ibesc),
