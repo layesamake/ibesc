@@ -22,7 +22,11 @@ export default function Header({ lang, pays }: { lang: Lang; pays: PaysLite[] })
             <Image src="/logo.png" alt="" width={52} height={52} priority unoptimized />
             <span>IBESC<small>INTERNATIONAL BESC BUSINESS</small></span>
           </Link>
-          <MobileNav label="Menu">
+          <div className="header-mobile-actions">
+            <Link href={`/${lang}/devis`} className="header-mobile-cta">
+              <span>{t.nav.apply}</span><span aria-hidden="true">↗</span>
+            </Link>
+            <MobileNav label="Menu" closeLabel={lang === "fr" ? "Fermer" : lang === "nl" ? "Sluiten" : "Close"}>
               <Link href={`/${lang}`}>{t.nav.home}</Link>
               <CountryMenu lang={lang} pays={pays} t={{ label: t.nav.countries, ...t.menu }} />
               <Link href={`/${lang}/a-propos`}>{t.nav.about}</Link>
@@ -31,7 +35,8 @@ export default function Header({ lang, pays }: { lang: Lang; pays: PaysLite[] })
               <Link href={`/${lang}/contact`}>{t.nav.contact}</Link>
               <LangSwitch lang={lang} />
               <Link href={`/${lang}/devis`} className="button small">{t.nav.apply} <span aria-hidden="true">↗</span></Link>
-          </MobileNav>
+            </MobileNav>
+          </div>
         </div>
       </header>
     </>

@@ -1042,3 +1042,144 @@ dialog .text-link { margin-top: 20px; }
   .brand small { letter-spacing: .6px; }
   .menu-toggle { padding-left: 4px; gap: 8px; }
 }
+
+/* ===== MOBILE NAVIGATION 2.0 ===== */
+.header-mobile-actions { display: contents; }
+.header-mobile-cta { display: none; }
+.nav-layer { display: contents; }
+.nav-backdrop { display: none; }
+
+@media (max-width: 960px) {
+  body { overflow-x: clip; }
+  .header-mobile-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+  .header-mobile-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    max-width: 132px;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: center;
+  }
+  .header-mobile-cta > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .header-mobile-cta > span:last-child { font-size: 15px; line-height: 1; }
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .menu-toggle__icon { font-size: 18px; line-height: 1; }
+  .nav-layer {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .nav-layer--open { visibility: visible; pointer-events: auto; }
+  .nav-backdrop {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(20, 46, 59, .54);
+    opacity: 0;
+    transition: opacity .2s ease;
+  }
+  .nav-layer--open .nav-backdrop { opacity: 1; }
+  .header nav {
+    position: absolute;
+    top: calc(33px + 83px + 10px);
+    left: max(20px, calc((100vw - 1320px) / 2));
+    right: max(20px, calc((100vw - 1320px) / 2));
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    max-height: calc(100dvh - 126px);
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--paper);
+    box-shadow: 0 22px 60px rgba(20, 46, 59, .2);
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(-12px) scale(.985);
+    transform-origin: top center;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .nav-layer--open nav { opacity: 1; transform: translateY(0) scale(1); }
+  .header nav > a { min-height: 48px; display: flex; align-items: center; padding: 13px 12px; border-bottom: 1px solid var(--border); }
+  .header nav > a:last-child { border-bottom: 0; }
+  .header nav .cmenu { border-bottom: 1px solid var(--border); }
+  .header nav .cmenu__btn { min-height: 48px; padding: 13px 12px; font-size: 14px; }
+  .header nav .small { min-height: 52px; display: flex; margin-top: 9px; padding: 16px; border-radius: 12px; }
+  .header .language { display: block; min-height: 46px; padding: 12px; border: 0; font-size: 12px; }
+  .cmenu__panel { margin: 0 0 9px; border-radius: 12px; }
+}
+
+@media (max-width: 620px) {
+  .wrap { width: calc(100% - 32px); }
+  .utility .wrap { height: 24px; }
+  .header-inner { height: 72px; }
+  .brand img { width: 38px; height: 38px; }
+  .brand > span { font-size: 23px; }
+  .brand small { font-size: 9px; letter-spacing: .8px; }
+  .header-mobile-cta { max-width: 112px; min-height: 40px; padding-inline: 10px; }
+  .menu-toggle { min-height: 40px; padding-inline: 10px; }
+  .header nav {
+    top: calc(24px + 72px + 10px);
+    left: 16px;
+    right: 16px;
+    max-height: calc(100dvh - 116px);
+  }
+  .nav-layer--open nav { transform: translateY(0); }
+}
+
+@media (max-width: 400px) {
+  .header-inner { gap: 4px; }
+  .brand { gap: 6px; }
+  .brand > span { font-size: 20px; }
+  .brand small { font-size: 7.5px; letter-spacing: .55px; }
+  .header-mobile-actions { gap: 4px; }
+  .header-mobile-cta { max-width: 86px; min-height: 38px; padding: 8px; font-size: 8px; }
+  .header-mobile-cta > span:last-child { font-size: 13px; }
+  .menu-toggle { min-width: 40px; min-height: 38px; padding: 8px; }
+  .menu-toggle__label { display: none; }
+  .menu-toggle__icon { font-size: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-backdrop, .header nav { transition: none; }
+}
+
+@media (max-width: 620px) {
+  /* Keep long pages responsive without forcing the browser to paint every section up front. */
+  main > section:not(.hero):not(.finder):not(.contact-hero):not(.tracking-hero):not(.about-hero) {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 520px;
+  }
+}
