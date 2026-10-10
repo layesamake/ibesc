@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import AfricaMap from "@/components/AfricaMap";
+import BenefitTabs from "@/components/BenefitTabs";
 import CountryFinder from "@/components/CountryFinder";
 import { finderText } from "@/lib/finder";
 import Flag from "@/components/Flag";
@@ -145,6 +146,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             </div>
             <p>{t.home.processDesc}</p>
           </div>
+          <BenefitTabs
+            items={t.home.why}
+            label={lang === "fr" ? "L'approche IBESC" : lang === "nl" ? "De IBESC-aanpak" : "The IBESC approach"}
+          />
           <div className="steps">
             {t.home.steps.map((s, i) => (
               <article key={s.t} data-reveal>
