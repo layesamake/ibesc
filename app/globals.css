@@ -325,8 +325,39 @@ footer { border-top: 1px solid var(--border); padding-top: 50px; }
 .map { width: 100%; height: auto; max-width: 560px; display: block; margin-inline: auto; }
 .map__c { fill: #e5e8e3; stroke: var(--surface); stroke-width: .6; }
 .map__c--cov { fill: #b7c5c9; }
-a:hover > .map__c--cov { fill: var(--accent); }
+.map a { outline: none; cursor: pointer; }
+.map a:hover > .map__c--cov, .map a:focus > .map__c--cov { fill: var(--accent); stroke: #fff; stroke-width: 1.4; }
+.map a:focus-visible > .map__c--cov { fill: var(--accent); stroke: var(--ink); stroke-width: 2.5; }
 .map__c--cur { fill: var(--accent); }
+
+/* Interactive Africa atlas */
+.africa-atlas { position: relative; overflow: hidden; background: var(--ink); color: #edf3ee; }
+.africa-atlas::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 82% 42%, #427281 0, transparent 34%), linear-gradient(118deg, #102a36 0, #142e3b 62%, #1c4554 100%); }
+.africa-atlas__grid { position: relative; display: grid; grid-template-columns: minmax(0, .86fr) minmax(340px, 1.14fr); gap: clamp(2rem, 7vw, 7rem); align-items: center; }
+.africa-atlas .eyebrow { color: #d7b183; margin-bottom: 18px; }
+.africa-atlas .dot { background: #d7b183; }
+.africa-atlas h2 { color: #fff; font-size: clamp(2.3rem, 4.2vw, 4.4rem); max-width: 11ch; margin: 0 0 22px; letter-spacing: -2.5px; line-height: 1.05; font-weight: 500; }
+.africa-atlas__copy > p:not(.eyebrow) { max-width: 50ch; color: #c7d6d8; margin: 0; }
+.atlas-hint { display: inline-flex; align-items: center; gap: .65rem; border: 1px solid #78939a; color: #f6e3c9; font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; padding: .55rem .75rem; margin: 25px 0 20px; }
+.atlas-hint span { color: #d7b183; font-size: 1rem; }
+.atlas-list { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; margin: 0; padding: 0; max-height: 320px; overflow-y: auto; scrollbar-color: #d7b183 transparent; }
+.atlas-list a { min-height: 46px; display: flex; align-items: center; gap: .65rem; padding: .5rem .6rem; border: 1px solid transparent; color: #edf3ee; transition: background .2s, border-color .2s, transform .2s; }
+.atlas-list a:hover, .atlas-list a:focus-visible { background: #ffffff12; border-color: #d7b183; transform: translateX(3px); outline: none; }
+.atlas-list .flag { width: 22px; height: 16px; }
+.atlas-list span:nth-child(2) { display: grid; gap: 0; min-width: 0; }
+.atlas-list strong { font-family: var(--heading); font-size: .76rem; line-height: 1.2; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.atlas-list small { color: #b5cbcd; font-size: .62rem; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.atlas-list a > span:last-child { margin-left: auto; color: #d7b183; }
+.africa-atlas__map { position: relative; isolation: isolate; min-width: 0; padding: 2.5rem 1rem 1.4rem; }
+.africa-atlas__map .map { position: relative; z-index: 1; max-height: 570px; filter: drop-shadow(0 24px 24px #06191f80); }
+.africa-atlas__map .map__c { fill: #355f6b; stroke: #174250; stroke-width: .65; }
+.africa-atlas__map .map__c--cov { fill: #b9c9a9; }
+.africa-atlas__map .map a:hover > .map__c--cov, .africa-atlas__map .map a:focus > .map__c--cov { fill: #e0a66c; }
+.atlas-kicker { position: absolute; top: 1.7rem; right: 0; z-index: 2; font-family: ui-monospace, monospace; font-size: .63rem; color: #b7d1d5; letter-spacing: .14em; writing-mode: vertical-rl; }
+.africa-atlas__map > p { position: absolute; z-index: 2; bottom: 1rem; left: 0; margin: 0; padding: .55rem .75rem; background: #102a36c9; color: #e3d0aa; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+.atlas-orbit { position: absolute; z-index: 0; border: 1px solid #8ba8ab3b; border-radius: 50%; pointer-events: none; }
+.atlas-orbit--one { width: 84%; aspect-ratio: 1; right: -18%; top: 7%; }
+.atlas-orbit--two { width: 58%; aspect-ratio: 1; right: 4%; bottom: -13%; border-color: #d7b18342; }
 .pays-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: start; margin-top: 1.5rem; }
 .pays-grid .finder .cards { max-height: none; grid-template-columns: repeat(2, 1fr); }
 
@@ -555,6 +586,10 @@ dialog .text-link { margin-top: 20px; }
   .contact-banner { padding: 38px 30px; }
   .contact-banner h2 { font-size: 28px; }
   .contact-banner .button { gap: 15px; flex-shrink: 0; padding: 18px; }
+  .africa-atlas__grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .africa-atlas h2 { max-width: 16ch; }
+  .africa-atlas__map { order: -1; max-width: 620px; width: 100%; margin-inline: auto; padding-top: 1.5rem; }
+  .atlas-list { max-height: 275px; }
   .footer-main { grid-template-columns: 1.2fr 1fr; gap: 30px; }
   /* Legacy */
   .cmenu__grid, .cards { grid-template-columns: repeat(3, 1fr); }
@@ -598,6 +633,12 @@ dialog .text-link { margin-top: 20px; }
   .brand img { width: 43px; height: 43px; }
   .brand > span { font-size: 27px; }
   .brand small { font-size: 11px; }
+  .africa-atlas__grid { gap: 1rem; }
+  .africa-atlas h2 { font-size: 2.25rem; letter-spacing: -1.5px; }
+  .africa-atlas__map { padding-inline: 0; }
+  .africa-atlas__map .map { max-height: 430px; }
+  .atlas-list { grid-template-columns: 1fr; max-height: 280px; }
+  .atlas-kicker { right: -.35rem; }
   .menu-toggle { display: flex; gap: 12px; border: 0; background: none; color: var(--ink); font-size: 12px; align-items: center; padding: 10px 0 10px 15px; }
   .menu-toggle span { font-size: 20px; }
   .header nav { display: none; position: absolute; top: 83px; left: -20px; right: -20px; background: var(--paper); z-index: 5; box-shadow: 0 15px 15px #142e3b18; padding: 20px; align-items: stretch; gap: 0; font-size: 14px; }

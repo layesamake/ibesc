@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import AfricaMap from "@/components/AfricaMap";
 import CountryFinder from "@/components/CountryFinder";
 import { finderText } from "@/lib/finder";
 import Flag from "@/components/Flag";
@@ -18,6 +19,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const certTypes = new Set<string>();
   for (const p of items) if (p.certificat) certTypes.add(p.certificat);
   const certList = [...certTypes].sort();
+  const byCode = new Map(lite.map((p) => [p.code, p]));
+  const mapCopy = lang === "nl"
+    ? { eyebrow: "EEN CONTINENT, UW ROUTE", title: "Kies uw bestemming op de kaart.", lead: "Elke gemarkeerde zone opent meteen de vereisten voor uw certificaat.", hint: "Klik op een land", action: "Bekijk formaliteiten" }
+    : lang === "en"
+      ? { eyebrow: "ONE CONTINENT, YOUR ROUTE", title: "Choose your destination on the map.", lead: "Every highlighted area opens the requirements for your certificate.", hint: "Select a country", action: "View requirements" }
+      : { eyebrow: "UN CONTINENT, VOTRE ITINÉRAIRE", title: "Choisissez votre destination sur la carte.", lead: "Chaque zone mise en évidence ouvre directement les formalités de votre certificat.", hint: "Cliquez sur un pays", action: "Voir les formalités" };
 
   return (
     <>
@@ -76,6 +83,44 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <span>{t.home.certLabel}</span>
         <div>{certList.length > 0 ? certList.join(" · ") : "BESC · ECTN · BSC · CTN · FERI · CNCA · BIETC"}</div>
       </div>
+
+      {/* ── Interactive Africa atlas ─────────────────────── */}
+      {lite.length > 0 ? (
+        <section className="africa-atlas section" aria-labelledby="atlas-title" data-reveal>
+          <div className="wrap africa-atlas__grid">
+            <div className="africa-atlas__copy">
+              <p className="eyebrow"><span className="dot"></span> {mapCopy.eyebrow}</p>
+              <h2 id="atlas-title">{mapCopy.title}</h2>
+              <p>{mapCopy.lead}</p>
+              <div className="atlas-hint"><span aria-hidden="true">◎</span>{mapCopy.hint}</div>
+              <ul className="atlas-list">
+                {lite.map((p) => (
+                  <li key={p.slug}>
+                    <Link href={`/${lang}/pays/${p.slug}`}>
+                      <Flag code={p.code} />
+                      <span><strong>{p.nom}</strong>{p.certificat ? <small>{p.certificat}</small> : null}</span>
+                      <span aria-hidden="true">↗</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="africa-atlas__map">
+              <div className="atlas-orbit atlas-orbit--one" aria-hidden="true"></div>
+              <div className="atlas-orbit atlas-orbit--two" aria-hidden="true"></div>
+              <span className="atlas-kicker">IBESC / AFRICA ROUTES</span>
+              <AfricaMap
+                label={mapCopy.title}
+                covered={lite.map((p) => p.code)}
+                hrefFor={(code) => `/${lang}/pays/${byCode.get(code)?.slug ?? ""}`}
+                nameFor={(code) => byCode.get(code)?.nom ?? code}
+                linkLabel={(code) => `${mapCopy.action} : ${byCode.get(code)?.nom ?? code}`}
+              />
+              <p>{lite.length} {lang === "fr" ? "destinations couvertes" : lang === "en" ? "covered destinations" : "bestemmingen gedekt"}</p>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* ── 01 / Destinations ────────────────────────────── */}
       <section className="destinations section wrap" id="destinations" aria-labelledby="dest-title" data-reveal>

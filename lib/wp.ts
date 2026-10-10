@@ -1,6 +1,6 @@
 import type { Lang } from "./i18n";
 
-const WP_API = process.env.WP_API_URL ?? "https://cms-ibesc.samatech.cloud/wp-json/wp/v2";
+const WP_API = process.env.WP_API_URL ?? "https://ibesc.samatech.cloud/wp-json/wp/v2";
 
 export const SECTIONS = ["intro", "ports", "docs", "infos", "procedure", "delais", "penalites"] as const;
 export type Section = (typeof SECTIONS)[number];

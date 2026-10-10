@@ -41,7 +41,7 @@ export default async function PaysPage({ params }: { params: Promise<{ lang: str
               <h2>{t.home.coverTitle}</h2>
               <p className="lead">{t.home.coverLead}</p>
             </div>
-            <AfricaMap label={t.countries.title} covered={items.map((p) => p.code)} hrefFor={(c) => `/${lang}/pays/${slugByCode.get(c) ?? ""}`} />
+            <AfricaMap label={t.countries.title} covered={items.map((p) => p.code)} hrefFor={(c) => `/${lang}/pays/${slugByCode.get(c) ?? ""}`} nameFor={(c) => items.find((p) => p.code === c)?.nom[lang] ?? c} linkLabel={(c) => `${T[lang].countries.title} : ${items.find((p) => p.code === c)?.nom[lang] ?? c}`} />
           </div>
         </section>
       ) : null}

@@ -28,11 +28,15 @@ export default function AfricaMap({
   current,
   covered,
   hrefFor,
+  nameFor,
+  linkLabel,
   label,
 }: {
   current?: string;
   covered?: string[];
   hrefFor?: (code: string) => string;
+  nameFor?: (code: string) => string;
+  linkLabel?: (code: string) => string;
   label: string;
 }) {
   const cov = new Set(covered ?? []);
@@ -42,9 +46,13 @@ export default function AfricaMap({
         const isCur = c.code && c.code === current;
         const isCov = c.code && (cov.has(c.code) || isCur);
         const cls = isCur ? "map__c map__c--cur" : isCov ? "map__c map__c--cov" : "map__c";
+        const name = c.code ? nameFor?.(c.code) : undefined;
         const el = <path key={c.key} d={c.d} className={cls} />;
         return isCov && hrefFor && c.code ? (
-          <a key={c.key} href={hrefFor(c.code)} aria-label={c.code}>{el}</a>
+          <a key={c.key} href={hrefFor(c.code)} aria-label={linkLabel?.(c.code) ?? name ?? c.code} data-country={c.code}>
+            <title>{name ?? c.code}</title>
+            {el}
+          </a>
         ) : el;
       })}
     </svg>
