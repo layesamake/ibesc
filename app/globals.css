@@ -432,6 +432,50 @@ footer { border-top: 1px solid var(--border); padding-top: 50px; }
 .contact-cards a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .contact-cards a:hover { color: var(--accent); }
 .contact-cta { margin: 32px 0 0; }
+
+/* ===== CONTACT CONVERSION PAGE ===== */
+.contact-hero { background: var(--ink); color: #f6f5f0; padding: 76px 0 86px; overflow: hidden; position: relative; }
+.contact-hero::after { content: ""; position: absolute; width: 52vw; aspect-ratio: 1; right: -18vw; top: -42%; border: 1px solid #86a1a638; border-radius: 50%; box-shadow: 0 0 0 45px #86a1a615, 0 0 0 90px #86a1a60b; pointer-events: none; }
+.contact-hero__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); gap: clamp(2rem, 9vw, 9rem); align-items: end; position: relative; z-index: 1; }
+.contact-hero__copy .eyebrow { color: #d9ab90; }
+.contact-hero__copy .dot { background: #d9ab90; }
+.contact-hero h1 { color: #fff; font-size: clamp(3rem, 6.5vw, 6.3rem); line-height: .98; letter-spacing: -4px; font-weight: 500; margin: 0 0 28px; max-width: 10ch; }
+.contact-hero h1 em { color: #d9ab90; font-style: normal; }
+.contact-hero__copy > p:not(.eyebrow) { max-width: 50ch; color: #bdcbd0; font-size: 15px; line-height: 1.85; margin: 0; }
+.contact-hero__assurance { display: inline-flex; align-items: center; gap: 10px; margin-top: 27px; color: #fff; font-size: 12px; letter-spacing: .04em; }
+.contact-hero__assurance span { display: grid; place-items: center; width: 22px; height: 22px; border: 1px solid #d9ab90; border-radius: 50%; color: #d9ab90; }
+.contact-pulse { display: grid; gap: 15px; border-left: 1px solid #78929b; padding: 5px 0 5px 28px; max-width: 340px; }
+.contact-pulse__index { color: #d9ab90; font-family: monospace; font-size: 11px; letter-spacing: .12em; }
+.contact-pulse strong { color: #fff; font-family: var(--heading); font-size: 20px; font-weight: 500; line-height: 1.35; }
+.contact-pulse > a:not(.text-link) { color: #fff; font-family: var(--heading); font-size: 18px; text-decoration: none; }
+.contact-pulse > a:not(.text-link):hover { color: #d9ab90; }
+.text-link--light { color: #e7cbb6; }
+.contact-convert { padding-top: 80px; padding-bottom: 100px; }
+.contact-convert__grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(280px, .92fr); gap: clamp(2rem, 7vw, 7rem); align-items: start; }
+.contact-form-panel { background: var(--surface); border: 1px solid var(--border); padding: clamp(28px, 4vw, 50px); }
+.contact-form-panel h2, .contact-aside h2 { font-size: clamp(2rem, 3.6vw, 3.15rem); line-height: 1.05; letter-spacing: -1.8px; margin: 0 0 16px; }
+.contact-form-panel__lead { color: var(--muted); font-size: 14px; line-height: 1.8; max-width: 48ch; margin: 0; }
+.contact-form-panel .form { margin-top: 32px; }
+.contact-form-panel .group { border-top-color: #c8cfcb; }
+.contact-aside { padding-top: 18px; }
+.contact-aside .eyebrow { color: var(--accent); }
+.contact-aside__lead { color: var(--muted); font-size: 14px; line-height: 1.85; max-width: 42ch; margin: 0 0 27px; }
+.contact-actions { display: grid; gap: 10px; margin-bottom: 34px; }
+.contact-actions a { display: grid; grid-template-columns: 32px 1fr; gap: 2px 12px; padding: 16px 0; border-top: 1px solid var(--border); color: var(--ink); text-decoration: none; }
+.contact-actions a:last-child { border-bottom: 1px solid var(--border); }
+.contact-actions a:hover strong { color: var(--accent); }
+.contact-actions span { grid-row: span 2; display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid var(--accent); border-radius: 50%; color: var(--accent); }
+.contact-actions strong { font-family: var(--heading); font-size: 15px; font-weight: 600; }
+.contact-actions small { color: var(--muted); font-size: 12px; }
+.contact-details { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 0 0 30px; }
+.contact-details dt { color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; margin-bottom: 7px; }
+.contact-details dd { margin: 0; color: var(--ink); font-size: 13px; line-height: 1.65; }
+.contact-location { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; background: var(--ink); color: #fff; padding: 18px; }
+.contact-location > span { display: grid; place-items: center; width: 30px; height: 30px; color: #d9ab90; border: 1px solid #d9ab90; border-radius: 50%; }
+.contact-location div { display: grid; gap: 3px; }
+.contact-location strong { font-family: var(--heading); font-size: 13px; font-weight: 500; }
+.contact-location small { color: #b9c8cc; font-size: 11px; }
+.contact-location a { color: #d9ab90; font-size: 20px; text-decoration: none; }
 .about { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; align-items: start; }
 .about__photo { position: sticky; top: 24px; min-width: 0; }
 .about__photo img { width: 100%; height: auto; border-radius: 3px; filter: saturate(.7); }
@@ -602,6 +646,12 @@ dialog .text-link { margin-top: 20px; }
   .contact-banner { padding: 38px 30px; }
   .contact-banner h2 { font-size: 28px; }
   .contact-banner .button { gap: 15px; flex-shrink: 0; padding: 18px; }
+  .contact-hero { padding: 58px 0 64px; }
+  .contact-hero__grid, .contact-convert__grid { grid-template-columns: 1fr; gap: 42px; }
+  .contact-hero h1 { font-size: 54px; letter-spacing: -2.5px; }
+  .contact-pulse { max-width: 420px; }
+  .contact-convert { padding-top: 55px; padding-bottom: 70px; }
+  .contact-aside { padding-top: 0; }
   .africa-atlas__grid { grid-template-columns: 1fr; gap: 1.5rem; }
   .africa-atlas h2 { max-width: 16ch; }
   .africa-atlas__map { order: -1; max-width: 620px; width: 100%; margin-inline: auto; padding-top: 1.5rem; }
@@ -734,6 +784,13 @@ dialog .text-link { margin-top: 20px; }
   .contact-banner h2 { font-size: 27px; }
   .contact-banner p:last-child { font-size: 11px; line-height: 1.7; }
   .contact-banner .button { font-size: 11px; }
+  .contact-hero { padding: 46px 0 52px; }
+  .contact-hero h1 { font-size: 45px; letter-spacing: -2px; }
+  .contact-hero__copy > p:not(.eyebrow) { font-size: 13px; }
+  .contact-pulse { padding-left: 18px; }
+  .contact-form-panel { padding: 26px 20px; }
+  .contact-form-panel h2, .contact-aside h2 { font-size: 30px; letter-spacing: -1px; }
+  .contact-details { grid-template-columns: 1fr; gap: 14px; }
   .footer-main { grid-template-columns: 1fr 1fr; gap: 30px 20px; }
   .footer-main > div:first-child { grid-column: 1 / -1; }
   .footer-main > div:last-child { grid-column: 1 / -1; }
