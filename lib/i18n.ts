@@ -64,8 +64,7 @@ type Dict = {
 };
 
 const fr: Dict = {
-  preprod: "Version de préproduction : contenus en cours de relecture.",
-  skip: "Aller au contenu",
+  preprod: "Version de préproduction : contenus en cours de relecture.", skip: "Aller au contenu",
   utility: { partner: "Votre partenaire à destination de l'Afrique" },
   nav: { home: "Accueil", about: "À propos", countries: "Destinations", tracking: "Suivi cargo", news: "Circulaires", contact: "Contact", apply: "Demander un certificat", expertise: "Notre expertise" },
   menu: { title: "Choisissez votre pays de destination", sub: "Exigences et formalités du certificat pour chaque pays.", search: "Rechercher un pays", all: "Voir tous les pays", none: "Aucun pays ne correspond." },
@@ -176,8 +175,7 @@ const fr: Dict = {
 };
 
 const en: Dict = {
-  preprod: "Pre-production version: content under review.",
-  skip: "Skip to content",
+  preprod: "Pre-production version: content under review.", skip: "Skip to content",
   utility: { partner: "Your partner for Africa-bound shipments" },
   nav: { home: "Home", about: "About us", countries: "Destinations", tracking: "Cargo tracking", news: "News / circulars", contact: "Contact", apply: "Apply for a certificate", expertise: "Our expertise" },
   menu: { title: "Select your destination country", sub: "Certificate requirements and formalities for each country.", search: "Search a country", all: "See all countries", none: "No country matches." },
@@ -288,8 +286,7 @@ const en: Dict = {
 };
 
 const nl: Dict = {
-  preprod: "Preproductieversie: inhoud wordt nagelezen.",
-  skip: "Naar de inhoud",
+  preprod: "Preproductieversie: inhoud wordt nagelezen.", skip: "Naar de inhoud",
   utility: { partner: "Uw partner voor verschepingen naar Afrika" },
   nav: { home: "Home", about: "Over ons", countries: "Bestemmingen", tracking: "Cargo tracking", news: "Nieuws / circulaires", contact: "Contact", apply: "Certificaat aanvragen", expertise: "Onze expertise" },
   menu: { title: "Kies uw bestemmingsland", sub: "Vereisten en formaliteiten van het certificaat per land.", search: "Zoek een land", all: "Alle landen bekijken", none: "Geen enkel land gevonden." },

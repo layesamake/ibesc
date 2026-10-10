@@ -16,7 +16,6 @@ export default function Header({ lang, pays }: { lang: Lang; pays: PaysLite[] })
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email} <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <p className="preprod">{t.preprod}</p>
       <header className="header">
         <div className="wrap header-inner">
           <Link href={`/${lang}`} className="brand" aria-label="International BESC Business">

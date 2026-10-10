@@ -79,9 +79,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .utility a { font-size: 11px; letter-spacing: 0; }
 .utility a span { margin-left: 14px; }
 
-/* ===== PREPROD ===== */
-.preprod { margin: 0; padding: .35rem 1rem; background: #ffc20e; color: var(--ink); font-family: var(--body); font-size: .82rem; font-weight: 600; text-align: center; }
-
 /* ===== HEADER ===== */
 .header { border-bottom: 1px solid var(--border); }
 .header-inner { height: 105px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
