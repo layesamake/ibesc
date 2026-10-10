@@ -1,0 +1,11 @@
+node_modules
+.next
+.env*
+!.env.example
+*.tsbuildinfo
+
+# Archives et sauvegardes historiques : ne jamais versionner de données client,
+# de configuration WordPress ou de base de données.
+sauve/
+*.tar.gz
+*.gz
