@@ -39,8 +39,19 @@ export function decode(s: string): string {
     .replace(/&([a-z]+);/gi, (m, n) => NOMMEES[n.toLowerCase()] ?? m);
 }
 
+const normaliserLegacy = (value: string): string => value
+  // Some historical CMS fields contain the two-character sequence "\\n".
+  .replace(/\\r?\\n/g, "\n")
+  // Other imports used a literal `n` as a line separator. Preserve a real
+  // trailing `n` in words such as "cargaison" while removing the separator.
+  .replace(/n+([.!?:;]?)(?=[A-ZÀ-ÖØ-Þ0-9])/g, (match, punctuation: string) =>
+    `${match.length > 1 ? "n" : ""}${punctuation}\n`,
+  )
+  // Remove isolated legacy placeholders without touching normal words.
+  .replace(/(^|\s)n+(?=\s|$)/gi, "$1");
+
 const propre = (v: unknown): string => {
-  const value = String(v ?? "").trim();
+  const value = normaliserLegacy(String(v ?? "").trim()).trim();
   // Ignore placeholders left by the legacy import instead of presenting them as rules.
   if (/^(?:n|\s|\\t)+$/i.test(value)) return "";
   return value;
