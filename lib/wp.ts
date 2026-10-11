@@ -3,6 +3,13 @@ import { ISO_BY_SLUG } from "./countries";
 
 const WP_API = process.env.WP_API_URL ?? "https://ibesc.samatech.cloud/wp-json/wp/v2";
 
+const ISO3_TO_2: Record<string, string> = {
+  AGO: "AO", BEN: "BJ", BFA: "BF", BDI: "BI", CMR: "CM", CAF: "CF", TCD: "TD", COD: "CD", COG: "CG",
+  CIV: "CI", GAB: "GA", GHA: "GH", GNB: "GW", GIN: "GN", GNQ: "GQ", LBR: "LR", LBY: "LY", MDG: "MG",
+  MLI: "ML", NER: "NE", NGA: "NG", SEN: "SN", SLE: "SL", SOM: "SO", SSD: "SS", TGO: "TG", EGY: "EG",
+  GMB: "GM", YEM: "YE", DJI: "DJ",
+};
+
 export const SECTIONS = ["intro", "ports", "docs", "infos", "procedure", "delais", "penalites"] as const;
 export type Section = (typeof SECTIONS)[number];
 export type Sections = Record<Section, string[]>;
@@ -48,7 +55,8 @@ function toPays(p: any): Pays {
   // current ACF REST response exposes the same public fields under `acf`.
   const m = p.meta ?? p.acf ?? {};
   const fr = decode(p.title?.rendered ?? "");
-  const code = String(m.code_iso ?? m.iso ?? m.code ?? "").toUpperCase() || ISO_BY_SLUG[p.slug] || "";
+  const rawCode = String(m.code_iso ?? m.iso ?? m.code ?? "").toUpperCase();
+  const code = (ISO3_TO_2[rawCode] ?? rawCode) || ISO_BY_SLUG[p.slug] || "";
   const localizedName = (lang: Lang) => /^[A-Z]{2}$/.test(code) ? new Intl.DisplayNames([lang], { type: "region" }).of(code) || fr : fr;
   const sec = (l: Lang): Sections => {
     const s = {} as Sections;
