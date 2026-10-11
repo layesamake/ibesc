@@ -41,7 +41,7 @@ export default function CountryMenu({ lang, pays, t }: { lang: string; pays: Pay
           <h2 className="cmenu__title">{t.title}</h2>
           <p className="cmenu__sub">{t.sub}</p>
           <label className="sr" htmlFor={searchId}>{t.search}</label>
-          <input id={searchId} className="cmenu__search" type="search" autoComplete="off" placeholder={`${t.search}…`} value={q} onChange={(e) => setQ(e.target.value)} autoFocus />
+          <input id={searchId} className="cmenu__search" type="search" autoComplete="off" placeholder={`${t.search}…`} value={q} onChange={(e) => setQ(e.target.value)} />
           {liste.length === 0 ? <p className="cmenu__none">{t.none}</p> : (
             <ul className="cmenu__grid">
               {liste.map((p) => (

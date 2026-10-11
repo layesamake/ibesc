@@ -23,8 +23,8 @@ export default function Header({ lang, pays }: { lang: Lang; pays: PaysLite[] })
             <span>IBESC<small>INTERNATIONAL BESC BUSINESS</small></span>
           </Link>
           <div className="header-mobile-actions">
-            <Link href={`/${lang}/devis`} className="header-mobile-cta">
-              <span>{t.nav.apply}</span><span aria-hidden="true">↗</span>
+            <Link href={`/${lang}/devis`} className="header-mobile-cta" aria-label={t.nav.apply}>
+              <span>{lang === "fr" ? "Demande" : lang === "nl" ? "Aanvraag" : "Request"}</span><span aria-hidden="true">↗</span>
             </Link>
             <MobileNav label="Menu" closeLabel={lang === "fr" ? "Fermer" : lang === "nl" ? "Sluiten" : "Close"}>
               <Link href={`/${lang}`}>{t.nav.home}</Link>

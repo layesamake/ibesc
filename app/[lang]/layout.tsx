@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Reveal from "@/components/Reveal";
 import { LANGS, isLang } from "@/lib/i18n";
 import { getPays } from "@/lib/wp";
 
@@ -28,7 +27,6 @@ export default async function LangLayout({ children, params }: { children: React
         <Header lang={lang} pays={lite} />
         <main id="contenu">{children}</main>
         <Footer lang={lang} />
-        <Reveal />
       </body>
     </html>
   );

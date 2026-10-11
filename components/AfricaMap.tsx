@@ -21,7 +21,7 @@ const calc = (() => {
     return x1 >= BBOX[0][0] && x0 <= BBOX[1][0] && y1 >= BBOX[0][1] && y0 <= BBOX[1][1];
   });
   const byNum = new Map<number, string>(Object.entries(ISO_NUM).map(([c, n]) => [n, c]));
-  return local.map((f) => ({ d: path(f) ?? "", code: byNum.get(Number(f.id)) ?? null, key: String(f.id) }));
+  return local.map((f, index) => ({ d: path(f) ?? "", code: byNum.get(Number(f.id)) ?? null, key: `${f.id ?? "territory"}-${index}` }));
 })();
 
 export default function AfricaMap({
@@ -41,7 +41,7 @@ export default function AfricaMap({
 }) {
   const cov = new Set(covered ?? []);
   return (
-    <svg className="map" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label}>
+    <svg className="map" viewBox={`0 0 ${W} ${H}`} role={hrefFor ? "group" : "img"} aria-label={label}>
       {calc.map((c) => {
         const isCur = c.code && c.code === current;
         const isCov = c.code && (cov.has(c.code) || isCur);

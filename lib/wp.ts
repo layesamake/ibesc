@@ -14,6 +14,7 @@ export type Pays = {
   certificat: string;
   certificatNom: string;
   valide: boolean;
+  updatedAt: string | null;
   nom: Record<Lang, string>;
   sections: Record<Lang, Sections>;
 };
@@ -38,6 +39,8 @@ const lignes = (v: unknown): string[] =>
 function toPays(p: any): Pays {
   const m = p.meta ?? {};
   const fr = decode(p.title?.rendered ?? "");
+  const code = String(m.code_iso ?? m.iso ?? m.code ?? "").toUpperCase() || ISO_BY_SLUG[p.slug] || "";
+  const localizedName = (lang: Lang) => /^[A-Z]{2}$/.test(code) ? new Intl.DisplayNames([lang], { type: "region" }).of(code) || fr : fr;
   const sec = (l: Lang): Sections => {
     const s = {} as Sections;
     for (const k of SECTIONS) {
@@ -49,11 +52,12 @@ function toPays(p: any): Pays {
   return {
     id: p.id,
     slug: p.slug,
-    code: String(m.code_iso ?? m.iso ?? m.code ?? "").toUpperCase() || ISO_BY_SLUG[p.slug] || "",
+    code,
     certificat: String(m.certificat ?? ""),
     certificatNom: String(m.certificat_nom ?? ""),
     valide: Boolean(m.valide_par_ibesc),
-    nom: { fr, en: String(m.titre_en || fr), nl: String(m.titre_nl || fr) },
+    updatedAt: typeof p.modified_gmt === "string" && Number.isFinite(Date.parse(`${p.modified_gmt}Z`)) ? `${p.modified_gmt}Z` : null,
+    nom: { fr, en: String(m.titre_en || localizedName("en")), nl: String(m.titre_nl || localizedName("nl")) },
     sections: { fr: sec("fr"), en: sec("en"), nl: sec("nl") },
   };
 }
