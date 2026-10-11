@@ -32,12 +32,21 @@ export function decode(s: string): string {
     .replace(/&([a-z]+);/gi, (m, n) => NOMMEES[n.toLowerCase()] ?? m);
 }
 
+const propre = (v: unknown): string => {
+  const value = String(v ?? "").trim();
+  // Ignore placeholders left by the legacy import instead of presenting them as rules.
+  if (/^(?:n|\s|\\t)+$/i.test(value)) return "";
+  return value;
+};
+
 const lignes = (v: unknown): string[] =>
-  String(v ?? "").split("\n").map((l) => l.trim()).filter(Boolean);
+  propre(v).split("\n").map((l) => l.trim()).filter((l) => l && !/^n+$/i.test(l));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function toPays(p: any): Pays {
-  const m = p.meta ?? {};
+  // Older REST responses expose registered fields under `meta`, while the
+  // current ACF REST response exposes the same public fields under `acf`.
+  const m = p.meta ?? p.acf ?? {};
   const fr = decode(p.title?.rendered ?? "");
   const code = String(m.code_iso ?? m.iso ?? m.code ?? "").toUpperCase() || ISO_BY_SLUG[p.slug] || "";
   const localizedName = (lang: Lang) => /^[A-Z]{2}$/.test(code) ? new Intl.DisplayNames([lang], { type: "region" }).of(code) || fr : fr;
@@ -53,8 +62,8 @@ function toPays(p: any): Pays {
     id: p.id,
     slug: p.slug,
     code,
-    certificat: String(m.certificat ?? ""),
-    certificatNom: String(m.certificat_nom ?? ""),
+    certificat: propre(m.certificat),
+    certificatNom: propre(m.certificat_nom),
     valide: Boolean(m.valide_par_ibesc),
     updatedAt: typeof p.modified_gmt === "string" && Number.isFinite(Date.parse(`${p.modified_gmt}Z`)) ? `${p.modified_gmt}Z` : null,
     nom: { fr, en: String(m.titre_en || localizedName("en")), nl: String(m.titre_nl || localizedName("nl")) },
