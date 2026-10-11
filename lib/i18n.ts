@@ -66,7 +66,7 @@ type Dict = {
 const fr: Dict = {
   preprod: "Version de préproduction : contenus en cours de relecture.", skip: "Aller au contenu",
   utility: { partner: "Votre partenaire à destination de l'Afrique" },
-  nav: { home: "Accueil", about: "À propos", countries: "Destinations", tracking: "Suivi cargo", news: "Circulaires", contact: "Contact", apply: "Demander un certificat", expertise: "Notre expertise" },
+  nav: { home: "Accueil", about: "À propos", countries: "Destinations", tracking: "Suivi cargo", news: "Actualités", contact: "Contact", apply: "Demander un certificat", expertise: "Notre expertise" },
   menu: { title: "Choisissez votre pays de destination", sub: "Exigences et formalités du certificat pour chaque pays.", search: "Rechercher un pays", all: "Voir tous les pays", none: "Aucun pays ne correspond." },
   home: {
     kicker: "Certificats de suivi des cargaisons",
@@ -169,7 +169,7 @@ const fr: Dict = {
     carriers: "Sites de suivi des armateurs", realtime: "Suivi en temps réel",
     items: ["Date et port de départ du navire", "Informations sur le transbordement", "Date et port d'arrivée"],
   },
-  news: { title: "Circulaires et actualités", lead: "Les changements de réglementation qui touchent vos expéditions.", empty: "Aucune circulaire n'est publiée pour le moment.", read: "Lire" },
+  news: { title: "Actualités", lead: "Conseils, changements de réglementation et informations utiles pour vos expéditions.", empty: "Aucune actualité n'est publiée pour le moment.", read: "Lire" },
   contact: { title: "Contact", lead: "Vous chargez, et nous vous assistons !", hours: "Horaires", hoursV: "Du lundi au vendredi, 9 h – 18 h", phone: "Téléphone", mail: "E-mail", address: "Adresse" },
   footer: { tag: "Vous chargez, nous vous assistons.", legal: "Politique de confidentialité et cookies : à venir.", tagline: "Vos formalités maritimes, en toute simplicité.", explore: "Explorer", beside: "À vos côtés", stayInTouch: "Restons en contact" },
 };

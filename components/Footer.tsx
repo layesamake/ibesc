@@ -30,6 +30,7 @@ export default function Footer({ lang }: { lang: Lang }) {
         <div>
           <p className="footer-heading">{t.footer.stayInTouch}</p>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email} ↗</a>
+          <a href="https://www.linkedin.com/company/international-besc-business/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
           <p>{CONTACT.adresse}</p>
         </div>
       </div>
