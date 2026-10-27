@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import type { Devis, Envoi } from "./admin";
 
-const SITE = process.env.SITE_URL ?? "https://ibesc.samatech.cloud";
+const SITE = process.env.SITE_URL ?? "https://ibesc.cloud";
 
 const configure = () => Boolean(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS && process.env.MAIL_TO);
 

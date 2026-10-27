@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 210" role="img" aria-labelledby="title desc">
+  <title id="title">Emblème éléphant Samatech</title>
+  <desc id="desc">Tête d’éléphant minimaliste en bleu et turquoise.</desc>
+
+  <g fill="none" stroke="#12345B" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke-width="16" d="M150 34c-52 0-93 36-93 86 0 30 16 55 42 68"/>
+    <path stroke-width="16" d="M150 34c52 0 93 36 93 86 0 30-16 55-42 68"/>
+    <path stroke="#19A7A0" stroke-width="16" d="M150 38v61c0 27-15 48-35 57-13 6-25 5-35 1"/>
+    <path stroke-width="16" d="M80 56c-34-6-59 13-59 43 0 29 21 48 48 45"/>
+    <path stroke-width="16" d="M220 56c34-6 59 13 59 43 0 29-21 48-48 45"/>
+    <circle cx="115" cy="78" r="6" fill="#12345B" stroke="none"/>
+    <circle cx="185" cy="78" r="6" fill="#12345B" stroke="none"/>
+  </g>
+</svg>

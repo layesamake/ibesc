@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import AfricaMap from "@/components/AfricaMap";
-import DevisForm from "@/components/DevisForm";
-import DocsForm from "@/components/DocsForm";
+import DocumentChecklist from "@/components/DocumentChecklist";
+import CountrySwitcher from "@/components/CountrySwitcher";
+import "./country.css";
+import { EXPERIENCE } from "@/lib/experience";
 import Flag from "@/components/Flag";
 import { T, isLang } from "@/lib/i18n";
 import { getPays } from "@/lib/wp";
+import { presentationHtml } from "@/lib/rich-text";
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
 
@@ -26,21 +29,24 @@ export default async function PaysDetail({ params }: Props) {
   const p = items.find((x) => x.slug === slug);
   if (!p) notFound();
   const s = p.sections[lang];
-  const opts = items.map((x) => ({ slug: x.slug, nom: x.nom[lang] }));
+  const copy = EXPERIENCE[lang];
+  const requestUrl = `/${lang}/devis?pays=${p.slug}`;
 
   const blocs: [string, string, string[]][] = [
-    ["docs", t.country.docs, s.docs], ["procedure", t.country.procedure, s.procedure], ["ports", t.country.ports, s.ports],
-    ["infos", t.country.infos, s.infos], ["delais", t.country.delays, s.delais], ["penalites", t.country.penalties, s.penalites],
+    ["docs", t.country.docs, s.docs], ["procedure", t.country.procedure, s.procedure],
+    ["delais", t.country.delays, s.delais], ["penalites", t.country.penalties, s.penalites],
+    ["ports", t.country.ports, s.ports], ["infos", t.country.infos, s.infos],
   ];
   const visibles = blocs.filter(([, , l]) => l.length);
-  const autres = items.filter((x) => x.slug !== p.slug);
 
   return (
-    <>
+    <div className="country-detail">
       <section className="pagehead pagehead--country">
         <div className="wrap">
           <p className="crumbs"><Link href={`/${lang}/pays`}>← {t.country.back}</Link></p>
-          <p className="eyebrow pagehead__eyebrow">{t.country.kicker}</p>
+          <div className="country-hero">
+          <div className="country-hero__copy">
+          <p className="eyebrow pagehead__eyebrow">IBESC / {copy.notebook} / {p.code}</p>
           <h1 className="h1 pagehead__title"><Flag code={p.code} className="flag flag--lg" />{p.nom[lang]}</h1>
           {p.certificat ? (
             <p className="pagehead__cert">
@@ -48,69 +54,52 @@ export default async function PaysDetail({ params }: Props) {
               {p.certificatNom ? <span>{p.certificatNom.replace(/^\(|\)$/g, "")}</span> : null}
             </p>
           ) : null}
-          {s.intro.length ? <div className="pagehead__intro">{s.intro.map((l, i) => <p key={i}>{l}</p>)}</div> : null}
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="wrap fiche">
-          <div className="fiche__main">
-            {visibles.map(([id, titre, lignes]) => (
-              <section key={id} id={id} className="bloc">
-                <h2 className="bloc__title">{titre}</h2>
-                <ul className="bloc__list">{lignes.map((l, i) => <li key={i}>{l}</li>)}</ul>
-              </section>
-            ))}
+          {s.intro.length ? <div className="pagehead__intro" dangerouslySetInnerHTML={{ __html: presentationHtml(s.intro) }} /> : null}
+          {p.updatedAt && <p className="country-updated">{copy.updated} <time dateTime={p.updatedAt}>{new Intl.DateTimeFormat(lang, { dateStyle: "long", timeZone: "UTC" }).format(new Date(p.updatedAt))}</time></p>}
           </div>
-          <aside className="fiche__side" aria-label={t.country.actions}>
-            <div className="fiche__card">
-              <p className="fiche__kicker">{t.country.certificate}</p>
-              {p.certificat ? <p className="fiche__cert">{p.certificat}</p> : null}
-              <AfricaMap current={p.code} label={p.nom[lang]} />
-              <div className="fiche__actions">
-                <a className="button" href="#demande">{t.country.quoteCta} <span aria-hidden="true">→</span></a>
-                <a className="button button--ghost" href="#documents">{t.country.sendCta}</a>
-              </div>
-              {visibles.length > 1 ? (
-                <nav className="toc" aria-label={t.country.toc}>
-                  <p className="toc__title">{t.country.toc}</p>
-                  <ul>{visibles.map(([id, titre]) => <li key={id}><a href={`#${id}`}>{titre}</a></li>)}</ul>
-                </nav>
-              ) : null}
+          <aside className="country-hero__card" aria-label={t.country.actions}>
+            <p className="eyebrow">{copy.preview}</p>
+            <AfricaMap current={p.code} label={p.nom[lang]} />
+            <div className="fiche__actions">
+              <Link className="button" href={requestUrl}>{t.country.quoteCta} <span aria-hidden="true">→</span></Link>
+              <Link className="button button--ghost" href={`${requestUrl}&mode=documents`}>{t.country.sendCta}</Link>
             </div>
           </aside>
+          </div>
+          <div className="country-facts" aria-label={copy.overview}>
+            {p.certificat && <div><span>{t.country.certificate}</span><strong>{p.certificat}</strong></div>}
+            {s.docs.length > 0 && <div><span>{copy.documents}</span><strong>{s.docs.length.toString().padStart(2, "0")}</strong><a href="#docs">{t.country.docs} ↓</a></div>}
+            {s.delais.length > 0 && <div className="country-facts__deadline"><span>{t.country.delays}</span><p>{s.delais[0]}</p><a href="#delais">{t.country.delays} ↓</a></div>}
+          </div>
         </div>
       </section>
 
-      <section className="section section--tint" id="demande">
-        <div className="wrap forms2">
+      {visibles.length > 1 && <nav className="country-sections" aria-label={t.country.toc}>
+        <div className="wrap">{visibles.map(([id, title]) => <a key={id} href={`#${id}`}>{title}</a>)}</div>
+      </nav>}
+      <section className="country-content">
+        <div className="wrap country-blocks">
+            {!visibles.length && <section className="bloc notebook-bloc"><p className="eyebrow">IBESC / {copy.notebook}</p><h2 className="bloc__title">{copy.documents}</h2><p>{copy.emptyDocs}</p><Link className="text-link" href={`/${lang}/contact`}>{t.nav.contact} →</Link></section>}
+            {visibles.map(([id, titre, lignes], index) => (
+              <section key={id} id={id} className={`bloc country-block country-block--${id}`}>
+                <p className="eyebrow">IBESC / {String(index + 1).padStart(2, "0")}</p>
+                <h2 className="bloc__title">{titre}</h2>
+                {id === "docs" ? <DocumentChecklist key={p.slug} documents={lignes} lang={lang} /> : id === "procedure" ? <ol className="country-steps">{lignes.map((l, i) => <li key={i}><span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><p>{l}</p></li>)}</ol> : <ul className="bloc__list">{lignes.map((l, i) => <li key={i}>{l}</li>)}</ul>}
+              </section>
+            ))}
+        </div>
+      </section>
+
+      <section className="country-next wrap" id="demande">
+        <div className="country-next__request">
           <div>
             <h2 className="h2">{t.country.quoteTitle}</h2>
             <p className="hint">{t.forms.quoteIntro}</p>
-            <p className="hint">{t.forms.reqNote}</p>
-            <DevisForm pays={opts} choix={p.slug} t={t.forms} lang={lang} compact />
-          </div>
-          <div id="documents">
-            <h2 className="h2">{t.country.sendTitle}</h2>
-            <p className="hint">{t.forms.docsIntro}</p>
-            <p className="hint">{t.forms.reqNote}</p>
-            <DocsForm pays={opts} choix={p.slug} t={t.forms} lang={lang} />
+            <Link className="button" href={requestUrl}>{copy.quote} →</Link>
           </div>
         </div>
+        <CountrySwitcher lang={lang} current={p.slug} countries={items.map((x) => ({ slug: x.slug, name: x.nom[lang] }))} />
       </section>
-
-      {autres.length ? (
-        <section className="section wrap neighbours" aria-labelledby="autres-pays">
-          <h2 id="autres-pays" className="h3">{t.country.neighbours}</h2>
-          <ul className="chips">
-            {autres.map((x) => (
-              <li key={x.slug}>
-                <Link className="chip" href={`/${lang}/pays/${x.slug}`}><Flag code={x.code} />{x.nom[lang]}</Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-    </>
+    </div>
   );
 }

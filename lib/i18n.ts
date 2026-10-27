@@ -64,10 +64,9 @@ type Dict = {
 };
 
 const fr: Dict = {
-  preprod: "Version de préproduction : contenus en cours de relecture.",
-  skip: "Aller au contenu",
+  preprod: "Version de préproduction : contenus en cours de relecture.", skip: "Aller au contenu",
   utility: { partner: "Votre partenaire à destination de l'Afrique" },
-  nav: { home: "Accueil", about: "À propos", countries: "Destinations", tracking: "Suivi cargo", news: "Circulaires", contact: "Contact", apply: "Demander un certificat", expertise: "Notre expertise" },
+  nav: { home: "Accueil", about: "À propos", countries: "Destinations", tracking: "Suivi cargo", news: "Actualités", contact: "Contact", apply: "Demander un certificat", expertise: "Notre expertise" },
   menu: { title: "Choisissez votre pays de destination", sub: "Exigences et formalités du certificat pour chaque pays.", search: "Rechercher un pays", all: "Voir tous les pays", none: "Aucun pays ne correspond." },
   home: {
     kicker: "Certificats de suivi des cargaisons",
@@ -170,14 +169,13 @@ const fr: Dict = {
     carriers: "Sites de suivi des armateurs", realtime: "Suivi en temps réel",
     items: ["Date et port de départ du navire", "Informations sur le transbordement", "Date et port d'arrivée"],
   },
-  news: { title: "Circulaires et actualités", lead: "Les changements de réglementation qui touchent vos expéditions.", empty: "Aucune circulaire n'est publiée pour le moment.", read: "Lire" },
+  news: { title: "Actualités", lead: "Conseils, changements de réglementation et informations utiles pour vos expéditions.", empty: "Aucune actualité n'est publiée pour le moment.", read: "Lire" },
   contact: { title: "Contact", lead: "Vous chargez, et nous vous assistons !", hours: "Horaires", hoursV: "Du lundi au vendredi, 9 h – 18 h", phone: "Téléphone", mail: "E-mail", address: "Adresse" },
   footer: { tag: "Vous chargez, nous vous assistons.", legal: "Politique de confidentialité et cookies : à venir.", tagline: "Vos formalités maritimes, en toute simplicité.", explore: "Explorer", beside: "À vos côtés", stayInTouch: "Restons en contact" },
 };
 
 const en: Dict = {
-  preprod: "Pre-production version: content under review.",
-  skip: "Skip to content",
+  preprod: "Pre-production version: content under review.", skip: "Skip to content",
   utility: { partner: "Your partner for Africa-bound shipments" },
   nav: { home: "Home", about: "About us", countries: "Destinations", tracking: "Cargo tracking", news: "News / circulars", contact: "Contact", apply: "Apply for a certificate", expertise: "Our expertise" },
   menu: { title: "Select your destination country", sub: "Certificate requirements and formalities for each country.", search: "Search a country", all: "See all countries", none: "No country matches." },
@@ -288,8 +286,7 @@ const en: Dict = {
 };
 
 const nl: Dict = {
-  preprod: "Preproductieversie: inhoud wordt nagelezen.",
-  skip: "Naar de inhoud",
+  preprod: "Preproductieversie: inhoud wordt nagelezen.", skip: "Naar de inhoud",
   utility: { partner: "Uw partner voor verschepingen naar Afrika" },
   nav: { home: "Home", about: "Over ons", countries: "Bestemmingen", tracking: "Cargo tracking", news: "Nieuws / circulaires", contact: "Contact", apply: "Certificaat aanvragen", expertise: "Onze expertise" },
   menu: { title: "Kies uw bestemmingsland", sub: "Vereisten en formaliteiten van het certificaat per land.", search: "Zoek een land", all: "Alle landen bekijken", none: "Geen enkel land gevonden." },

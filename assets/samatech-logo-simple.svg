@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 180" role="img" aria-labelledby="title desc">
+  <title id="title">Samatech</title>
+  <desc id="desc">Logo minimaliste représentant une tête d’éléphant et le nom Samatech.</desc>
+
+  <g fill="none" stroke="#12345B" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Tête d’éléphant minimaliste -->
+    <path stroke-width="14" d="M142 42c-47 0-84 32-84 77 0 26 14 47 37 58"/>
+    <path stroke-width="14" d="M142 42c47 0 84 32 84 77 0 26-14 47-37 58"/>
+    <path stroke="#19A7A0" stroke-width="14" d="M142 45v55c0 24-13 42-31 50-12 5-22 4-31 1"/>
+    <path stroke-width="14" d="M79 61c-30-5-52 12-52 38 0 25 19 41 42 39"/>
+    <path stroke-width="14" d="M205 61c30-5 52 12 52 38 0 25-19 41-42 39"/>
+    <circle cx="111" cy="81" r="5" fill="#12345B" stroke="none"/>
+    <circle cx="173" cy="81" r="5" fill="#12345B" stroke="none"/>
+  </g>
+
+  <text x="300" y="111" fill="#12345B" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="700" letter-spacing="-1">Samatech</text>
+</svg>

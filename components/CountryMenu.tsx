@@ -32,16 +32,18 @@ export default function CountryMenu({ lang, pays, t }: { lang: string; pays: Pay
 
   return (
     <div className="cmenu" ref={box}>
-      <button type="button" className="cmenu__btn" aria-expanded={open} aria-controls={panelId} onClick={() => setOpen(!open)}>
-        {t.label}
+      <div className="cmenu__trigger">
+      <Link href={`/${lang}/pays`} className="cmenu__btn cmenu__link" onClick={() => setOpen(false)}>{t.label}</Link>
+      <button type="button" className="cmenu__btn cmenu__toggle" aria-label={t.title} aria-expanded={open} aria-controls={panelId} onClick={() => setOpen((value) => !value)}>
         <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" className={open ? "cmenu__chev cmenu__chev--up" : "cmenu__chev"}><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" /></svg>
       </button>
+      </div>
       {open ? (
         <div className="cmenu__panel" id={panelId}>
           <h2 className="cmenu__title">{t.title}</h2>
           <p className="cmenu__sub">{t.sub}</p>
           <label className="sr" htmlFor={searchId}>{t.search}</label>
-          <input id={searchId} className="cmenu__search" type="search" autoComplete="off" placeholder={`${t.search}…`} value={q} onChange={(e) => setQ(e.target.value)} autoFocus />
+          <input id={searchId} className="cmenu__search" type="search" autoComplete="off" placeholder={`${t.search}…`} value={q} onChange={(e) => setQ(e.target.value)} />
           {liste.length === 0 ? <p className="cmenu__none">{t.none}</p> : (
             <ul className="cmenu__grid">
               {liste.map((p) => (

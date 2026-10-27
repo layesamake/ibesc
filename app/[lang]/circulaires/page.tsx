@@ -13,14 +13,14 @@ export default async function CirculairesPage({ params }: { params: Promise<{ la
   const { lang } = await params;
   if (!isLang(lang)) notFound();
   const t = T[lang].news;
-  const items = await getCirculaires();
+  const items = await getCirculaires(lang);
   return (
     <>
       <PageHead eyebrow={T[lang].nav.news} title={t.title} lead={t.lead} />
       <section className="section">
         <div className="wrap wrap--narrow">
           {items.length === 0 ? <p className="notice">{t.empty}</p> : items.map((c) => (
-            <article key={c.id} className="circ">
+            <article key={`${c.source}-${c.id}`} className="circ">
               <p className="circ__date"><time dateTime={c.date}>{new Date(c.date).toLocaleDateString(lang)}</time></p>
               <h2 className="circ__title">{c.titre}</h2>
               {/* Contenu saisi dans WordPress par l'équipe IBESC (source de confiance). */}

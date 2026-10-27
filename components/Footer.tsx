@@ -5,6 +5,7 @@ import { LIEN_LEGAL } from "@/lib/legal";
 
 export default function Footer({ lang }: { lang: Lang }) {
   const t = T[lang];
+  const studioLabel = { fr: "Espace gestionnaire", en: "Content manager", nl: "Beheerdersruimte" }[lang];
   return (
     <footer>
       <div className="wrap footer-main">
@@ -30,12 +31,16 @@ export default function Footer({ lang }: { lang: Lang }) {
         <div>
           <p className="footer-heading">{t.footer.stayInTouch}</p>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email} ↗</a>
+          <a href="https://www.linkedin.com/company/international-besc-business/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
           <p>{CONTACT.adresse}</p>
         </div>
       </div>
       <div className="wrap footer-bottom">
         <span>© {new Date().getFullYear()} IBESC. {t.footer.legal}</span>
-        <Link href={`/${lang}/confidentialite`}>{LIEN_LEGAL[lang]}</Link>
+        <span className="footer-links">
+          <Link href={`/${lang}/confidentialite`}>{LIEN_LEGAL[lang]}</Link>
+          <a className="footer-studio-link" href="https://admin.ibesc.cloud/wp-admin" target="_blank" rel="noopener noreferrer">{studioLabel}</a>
+        </span>
       </div>
     </footer>
   );

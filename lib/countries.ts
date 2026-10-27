@@ -1,9 +1,48 @@
-// Code numérique ISO 3166-1 de chaque pays, pour repérer son tracé sur la carte.
-export const ISO_NUM: Record<string, number> = {
-  AO: 24, BJ: 204, BF: 854, BI: 108, CM: 120, CF: 140, TD: 148, CD: 180, CG: 178, CI: 384,
-  GA: 266, GH: 288, GW: 624, GN: 324, GQ: 226, LR: 430, LY: 434, MG: 450, ML: 466, NE: 562,
-  NG: 566, SN: 686, SL: 694, SO: 706, SS: 728, TG: 768, EG: 818, GM: 270, YE: 887, DJ: 262,
+import countryCodes from "./country-codes.json";
+
+// ISO 3166-1 / Unicode CLDR 48. See docs/ajout-pays.md for data sources.
+// This registry includes every country, independently of the CMS destinations.
+export const ISO_NUM: Record<string, number> = Object.fromEntries(
+  countryCodes.map(({ alpha2, numeric }) => [alpha2, numeric]),
+);
+const ISO3_TO_2 = new Map(countryCodes.map(({ alpha2, alpha3 }) => [alpha3, alpha2]));
+const NUM_TO_2 = new Map(countryCodes.map(({ alpha2, numeric }) => [numeric, alpha2]));
+
+const countryKey = (value: string) => value.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+const CODE_BY_NAME = new Map<string, string>();
+for (const lang of ["fr", "en", "nl"]) {
+  const names = new Intl.DisplayNames([lang], { type: "region" });
+  for (const { alpha2 } of countryCodes) {
+    const name = names.of(alpha2);
+    if (name) CODE_BY_NAME.set(countryKey(name), alpha2);
+  }
+}
+
+// Secours pour les fiches WordPress historiques dont le champ code_iso n'est pas exposé dans l'API REST.
+export const ISO_BY_SLUG: Record<string, string> = {
+  angola: "AO", benin: "BJ", "burkina-faso": "BF", burundi: "BI", cameroun: "CM",
+  "republique-centrafricaine": "CF", tchad: "TD", "republique-democratique-du-congo": "CD",
+  "republique-du-congo": "CG", "cote-divoire": "CI", gabon: "GA", ghana: "GH",
+  "guinee-bissau": "GW", "guinee-conakry": "GN", "guinee-equatoriale": "GQ", liberia: "LR",
+  libye: "LY", madagascar: "MG", mali: "ML", niger: "NE", nigeria: "NG", senegal: "SN",
+  "sierra-leone": "SL", somalie: "SO", "soudan-du-sud": "SS", togo: "TG", egypte: "EG",
+  gambie: "GM", yemen: "YE", djibouti: "DJ",
 };
+
+export function normalizeCountryCode(value: unknown): string {
+  const code = String(value ?? "").trim().toUpperCase();
+  if (Object.hasOwn(ISO_NUM, code)) return code;
+  if (/^\d{1,3}$/.test(code)) return NUM_TO_2.get(Number(code)) ?? "";
+  return ISO3_TO_2.get(code) ?? "";
+}
+
+export function resolveCountryCode(value: unknown, slug = "", name = ""): string {
+  return normalizeCountryCode(value)
+    || ISO_BY_SLUG[slug]
+    || CODE_BY_NAME.get(countryKey(slug))
+    || CODE_BY_NAME.get(countryKey(name))
+    || "";
+}
 
 export type Region = "west" | "central" | "other";
 // Regroupement du prototype. « other » couvre les autres zones, Yémen compris.
