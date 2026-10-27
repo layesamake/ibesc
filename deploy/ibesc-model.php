@@ -1,6 +1,6 @@
 <?php
 /** Plugin Name: IBESC content model */
-const IBESC_FRONT = 'https://ibesc.samatech.cloud';
+const IBESC_FRONT = 'https://ibesc.cloud';
 const IBESC_LANGS = ['fr' => 'Français', 'en' => 'English', 'nl' => 'Nederlands'];
 const IBESC_SECTIONS = [
     'intro'     => ['Introduction', 'Un paragraphe par ligne.'],
@@ -43,11 +43,37 @@ add_action('init', function () {
             'auth_callback' => function () { return current_user_can('edit_posts'); },
         ]);
     }
+    foreach (IBESC_LANGS as $l => $_) {
+        register_post_meta('circulaire', "titre_$l", [
+            'type' => 'string', 'single' => true, 'show_in_rest' => true,
+            'auth_callback' => function () { return current_user_can('edit_posts'); },
+        ]);
+        register_post_meta('circulaire', "contenu_$l", [
+            'type' => 'string', 'single' => true, 'show_in_rest' => true,
+            'auth_callback' => function () { return current_user_can('edit_posts'); },
+        ]);
+    }
 });
 
 add_action('add_meta_boxes', function () {
     add_meta_box('ibesc_pays', 'Fiche pays', 'ibesc_pays_box', 'pays', 'normal', 'high');
+    add_meta_box('ibesc_circulaire_langues', 'Versions linguistiques de la circulaire', 'ibesc_circulaire_box', 'circulaire', 'normal', 'high');
 });
+
+function ibesc_circulaire_box($post) {
+    wp_nonce_field('ibesc_circulaire', 'ibesc_circulaire_nonce');
+    $g = function ($k) use ($post) { return get_post_meta($post->ID, $k, true); };
+    ?>
+    <p class="description">Le titre et le contenu français restent ceux de l’éditeur WordPress. Saisissez les versions anglaise et néerlandaise ci-dessous.</p>
+    <?php foreach (['en' => 'English', 'nl' => 'Nederlands'] as $l => $label): ?>
+    <details style="margin:10px 0;border:1px solid #c3c4c7;padding:8px 12px;background:#fff">
+        <summary style="cursor:pointer;font-weight:600;font-size:14px"><?php echo esc_html($label); ?></summary>
+        <p><label>Titre<br><input name="titre_<?php echo $l; ?>" type="text" class="large-text" value="<?php echo esc_attr($g("titre_$l")); ?>"></label></p>
+        <p><label>Contenu<br><textarea name="contenu_<?php echo $l; ?>" rows="14" class="large-text code"><?php echo esc_textarea($g("contenu_$l")); ?></textarea></label></p>
+        <p class="description">Utilisez les mêmes balises HTML que dans l’éditeur principal : &lt;p&gt;, &lt;h2&gt;, &lt;ul&gt;, &lt;ol&gt; et &lt;strong&gt;.</p>
+    </details>
+    <?php endforeach;
+}
 
 function ibesc_pays_box($post) {
     wp_nonce_field('ibesc_pays', 'ibesc_pays_nonce');
@@ -90,6 +116,16 @@ add_action('save_post_pays', function ($id) {
     foreach (IBESC_LANGS as $l => $_) {
         if ($l !== 'fr') update_post_meta($id, "titre_$l", sanitize_text_field($in("titre_$l")));
         foreach (IBESC_SECTIONS as $s => $__) update_post_meta($id, "{$s}_$l", sanitize_textarea_field($in("{$s}_$l")));
+    }
+});
+
+add_action('save_post_circulaire', function ($id) {
+    if (!isset($_POST['ibesc_circulaire_nonce']) || !wp_verify_nonce($_POST['ibesc_circulaire_nonce'], 'ibesc_circulaire')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $id)) return;
+    foreach (['en', 'nl'] as $l) {
+        update_post_meta($id, "titre_$l", sanitize_text_field(wp_unslash($_POST["titre_$l"] ?? '')));
+        update_post_meta($id, "contenu_$l", wp_kses_post(wp_unslash($_POST["contenu_$l"] ?? '')));
     }
 });
 
